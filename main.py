@@ -1,4 +1,4 @@
-OPENAI_API_KEY = "sk-*********************" 
+OPENAI_API_KEY = "sk-**********" 
 import openai
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -16,32 +16,75 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
     return response.choices[0].message["content"]
 
 
-prompt = f"""
-***Create a Structured Recipe for a Delicious Fruit Smoothie***  #Tactic 1#
-***Instructions:*** #Tactic 1#
-1. Use the following structure for your recipe:
-     Recipe for [Name of the Smoothie]
-      Ingredients:
-       - [List of ingredients, separated by commas]
-   Instructions: #Tactic 2#
-   1. [Step 1: Describe the first step] 
-   2. [Step 2: Describe the second step]
-   3. [Step 3: Describe the third step]
-   ...
-   Enjoy your [Name of the Smoothie]!
+# story_excerpt = """
+#     Once upon a time, in a faraway land,\
+#             there lived a brave knight named Sir Arthur.\
+#                 He embarked on a perilous quest to rescue a \
+#                 captured princess from the clutches of a fearsome dragon
+# """
 
-2. Create a fruit smoothie recipe, with a specific focus on a tropical theme.
+# customer_review_excert = """
+# The product is amazing! It exceeded my expectations,\
+#       and the customer service was top-notch. \
+#         However, the delivery was a bit slow.
+# """
 
-3.Include  at least three tropical fruits (e.g., mango, pineapple, banana) among the ingredients. #Tactic 3#
+# prompt = f"""
 
-4. Sample smoothie names that convey a tropical or exotic vibe.
+# Your task is to Go through the customer reviews and\
+#       generate the summary of the review. \
+#     From the customer_review_excert delimited by triple quotes \
 
-5. Prioritize creativity and originality in the recipe's content, and feel free to add personal touches to make it unique. #Give model time to think #
-
-***Few-shot prompting for inspiration:*** #Tactic 4#
-Few-shot 1: "Create a smoothie name with a tropical feel."
-Few-shot 2: "Suggest a name that evokes an island paradise."
+# review: ```{customer_review_excert}```
+# """
+#ITERATIVE PROMPT ENGINEERING
+prompt1 =f"""
+    Write a poem about the night sky.
+"""
+iteration1 =f"""
+    Compose a vivid and enchanting poem about the moon and \
+        stars that captivates the reader's imagination.
+"""
+iteration2 =f"""
+    Craft a mesmerizing poem that evokes the beauty of \
+        moonlit night, filled with stars that twinkle \
+            like diamonds in the dark
 """
 
-response = get_completion(prompt)
+iteration3 =f"""
+    Write a sonnet that captures the essence of \
+        a serene night sky, with the moon as a \
+            silent guardian and stars as its shimmering companions.
+"""
+
+#SUMMARIZATION
+story_excerpt = """
+    Once upon a time, in a faraway land,\
+            there lived a brave knight named Sir Arthur.\
+                He embarked on a perilous quest to rescue a \
+                captured princess from the clutches of a fearsome dragon
+"""
+prompt2=f"""
+    Read the story carefully and generate a concise conclusion.
+"""
+
+customer_review_excert = """
+The product is amazing! It exceeded my expectations,\
+      and the customer service was top-notch. \
+        However, the delivery was a bit slow.
+"""
+prompt3=f"""
+    Go through the customer reviews and generate the summary of the review.
+"""
+
+
+response = get_completion(prompt1)
+# response = get_completion(prompt2)
+# response = get_completion(prompt3)
+# response = get_completion(iteration1)
+# response = get_completion(iteration2)
+# response = get_completion(iteration3)
+
+
 print(response)
+
